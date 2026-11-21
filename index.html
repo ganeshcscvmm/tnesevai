@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ganesh CSC & e-Sevai Center | Study Materials & Daily News</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  html, body { width: 100%; min-height: 100vh; background-color: #f4f7fb; color: #222; line-height: 1.6; overflow-x: hidden; }
+  
+  /* Live Ticker */
+  .news-ticker {
+    width: 100%; background-color: #d32f2f; color: white; padding: 10px 15px;
+    font-size: 14px; font-weight: bold; display: flex; align-items: center; border-bottom: 3px solid #ffca28;
+  }
+  .news-ticker .ticker-title {
+    background: #fff; color: #d32f2f; padding: 3px 10px; border-radius: 4px;
+    margin-right: 10px; white-space: nowrap; font-size: 12px;
+  }
+
+  /* Special Offer Strip */
+  .offer-strip {
+    background: #ffeb3b; color: #b71c1c; text-align: center; padding: 8px 15px;
+    font-weight: bold; font-size: 14px; border-bottom: 2px dashed #d32f2f;
+  }
+
+  /* Header Banner */
+  .hero {
+    width: 100%; background: linear-gradient(135deg, #0d47a1, #1976d2); color: white;
+    text-align: center; padding: 30px 20px; border-bottom: 4px solid #ffca28;
+  }
+  .hero h1 { font-size: 28px; margin-bottom: 4px; color: #ffeb3b; }
+  .hero h2 { font-size: 18px; margin-bottom: 8px; font-weight: 600; }
+  .hero p { font-size: 14px; margin: 3px 0; }
+  
+  .cta-bar { display: flex; justify-content: center; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .btn {
+    padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: bold;
+    font-size: 14px; border: none; cursor: pointer; display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+  .btn-call { background-color: #ffca28; color: #000; }
+  .btn-wa { background-color: #25d366; color: #fff; }
+  .btn-apply-main { background-color: #ff5722; color: #fff; }
+  .btn-gform { background-color: #00bcd4; color: #000; }
+
+  /* Main Navigation Tabs */
+  .nav-tabs {
+    display: flex; justify-content: center; background: #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    position: sticky; top: 0; z-index: 90; flex-wrap: wrap;
+  }
+  .tab-btn {
+    flex: 1; min-width: 120px; max-width: 260px; padding: 14px 8px; border: none; background: #fff;
+    font-size: 14.5px; font-weight: bold; color: #444; cursor: pointer; border-bottom: 4px solid transparent; transition: 0.2s;
+  }
+  .tab-btn:hover { background: #f0f7ff; color: #0d47a1; }
+  .tab-btn.active { color: #0d47a1; border-bottom: 4px solid #0d47a1; background: #e3f2fd; }
+
+  /* Tab Content Sections */
+  .tab-section { display: none; padding: 25px 20px; max-width: 1200px; margin: 0 auto; }
+  .tab-section.active { display: block; }
+
+  /* Tracking Box */
+  .track-card {
+    background: #ffffff; max-width: 800px; margin: 0 auto 28px auto; padding: 20px;
+    border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.09); border-top: 4px solid #00bcd4; text-align: center;
+  }
+  .track-card h3 { color: #0d47a1; margin-bottom: 8px; font-size: 18px; }
+  .track-input-group { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; justify-content: center; }
+  .track-input { flex: 1; min-width: 240px; padding: 11px 14px; border: 2px solid #0d47a1; border-radius: 8px; font-size: 14.5px; }
+  .btn-track-submit { background: #0d47a1; color: #fff; padding: 11px 22px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .track-result {
+    display: none; margin-top: 15px; padding: 14px; border-radius: 8px; background: #e8f5e9;
+    border-left: 5px solid #2e7d32; text-align: left; font-size: 14.5px;
+  }
+
+  .section-title { text-align: center; font-size: 22px; color: #0d47a1; margin-bottom: 5px; }
+  .section-subtitle { text-align: center; font-size: 14px; color: #d32f2f; margin-bottom: 22px; font-weight: 600; }
+  
+  /* Grids & Cards */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); gap: 20px; width: 100%; }
+  .card {
+    background: #fff; border-radius: 12px; padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07); border-top: 5px solid #1976d2;
+  }
+  .card.esevai { border-top-color: #2e7d32; }
+  .card.csc { border-top-color: #d32f2f; }
+  .card.mobile { border-top-color: #f57c00; }
+  .card.exam { border-top-color: #7b1fa2; }
+
+  .card h3 { font-size: 17.5px; margin-bottom: 12px; color: #111; }
+  .card ul { list-style: none; }
+  .card ul li {
+    padding: 10px 8px; border-bottom: 1px dashed #eee; font-size: 14px; cursor: pointer;
+    border-radius: 6px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .card ul li:hover { background-color: #e3f2fd; color: #0d47a1; }
+  .card ul li::before { content: "✔"; color: #2e7d32; font-weight: bold; margin-right: 8px; }
+  .info-icon { font-size: 11.5px; background: #0d47a1; color: #fff; padding: 3px 9px; border-radius: 12px; font-weight: bold; }
+
+  /* Study Materials & Daily News Cards */
+  .hub-card {
+    background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-left: 5px solid #d32f2f; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .hub-card.news-item { border-left-color: #1976d2; }
+  .badge {
+    display: inline-block; background: #e3f2fd; color: #0d47a1; padding: 3px 10px;
+    border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 8px; width: fit-content;
+  }
+  .hub-card h4 { font-size: 17px; color: #111; margin-bottom: 8px; }
+  .hub-card p { font-size: 14px; color: #555; margin-bottom: 14px; }
+  .btn-unlock-pdf {
+    background: #d32f2f; color: #fff; padding: 10px 16px; border: none; border-radius: 8px;
+    font-weight: bold; font-size: 14px; cursor: pointer; text-align: center; text-decoration: none; display: block;
+  }
+
+  /* e-Sevai Photo & Doc Converter Box */
+  .tool-box {
+    background: #fff; max-width: 780px; margin: 0 auto; padding: 22px; border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 5px solid #2e7d32;
+  }
+
+  /* Modals */
+  .modal {
+    display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%;
+    overflow-y: auto; background-color: rgba(0,0,0,0.65); align-items: center; justify-content: center; padding: 15px;
+  }
+  .modal.show { display: flex; }
+  .modal-content {
+    background-color: #fff; margin: auto; padding: 24px; border-radius: 12px; width: 100%;
+    max-width: 650px; max-height: 92vh; overflow-y: auto; box-shadow: 0 5px 25px rgba(0,0,0,0.35);
+  }
+  .close-btn { float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #666; }
+  .modal h4 { color: #0d47a1; margin-bottom: 14px; font-size: 18.5px; border-bottom: 2px solid #ffca28; padding-bottom: 6px; }
+  .doc-ul { list-style: none; margin: 12px 0 18px 0; }
+  .doc-ul li { padding: 8px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+  .doc-ul li::before { content: "📌 "; }
+
+  /* Form Elements */
+  .form-group { margin-bottom: 14px; text-align: left; }
+  .form-group label { display: block; font-weight: bold; font-size: 13.5px; margin-bottom: 5px; color: #333; }
+  .form-group input[type="text"], .form-group input[type="tel"], .form-group input[type="number"], .form-group textarea {
+    width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* Family Table */
+  .family-section { background: #eef7ff; border: 1px solid #90caf9; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: none; }
+  .fam-row { display: grid; grid-template-columns: 2fr 1fr 1.5fr 1.5fr 36px; gap: 6px; margin-bottom: 6px; align-items: center; }
+  .fam-row input { padding: 7px 8px; border: 1px solid #bbb; border-radius: 4px; font-size: 13px; }
+  .btn-del-row { background: #f44336; color: #fff; border: none; border-radius: 4px; padding: 7px; cursor: pointer; font-weight: bold; }
+  .btn-add-row { background: #1976d2; color: #fff; border: none; border-radius: 4px; padding: 6px 12px; font-size: 13px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+
+  /* Payment & Postal Boxes */
+  .payment-card { background: #fffde7; border: 2px solid #fbc02d; padding: 14px; border-radius: 8px; margin-bottom: 15px; text-align: center; }
+  .qr-box { margin: 8px auto; padding: 8px; background: #fff; display: inline-block; border: 1px solid #ddd; border-radius: 6px; }
+  .qr-box img { width: 135px; height: 135px; display: block; }
+  .file-box { border: 1.5px dashed #1976d2; padding: 12px; border-radius: 8px; background: #f8fbff; margin-bottom: 14px; }
+  .preview-img { max-width: 120px; max-height: 150px; margin-top: 8px; border-radius: 4px; border: 1px solid #ccc; display: none; }
+  .postal-box { background: #f1f8e9; border: 2px dashed #388e3c; padding: 14px; border-radius: 8px; margin-bottom: 15px; }
+  .postal-box h5 { color: #2e7d32; font-size: 14.5px; margin-bottom: 8px; }
+
+  /* Signature Pad */
+  .sig-container { border: 2px solid #0d47a1; border-radius: 8px; background: #fff; text-align: center; padding: 6px; }
+  canvas#sigCanvas { width: 100%; height: 125px; background: #fffdf7; border-bottom: 1px dashed #ccc; touch-action: none; cursor: crosshair; }
+  .sig-actions { display: flex; justify-content: space-between; margin-top: 8px; gap: 8px; }
+  .btn-small { padding: 6px 12px; font-size: 12px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; }
+  .declaration-box { background: #fff8e1; border-left: 4px solid #ffca28; padding: 12px; font-size: 13.5px; margin: 15px 0; }
+
+  /* Footer */
+  .footer { width: 100%; background: #1e293b; color: #fff; text-align: center; padding: 28px 20px; margin-top: 35px; }
+  .footer h3 { color: #ffca28; margin-bottom: 8px; }
+  .footer p { margin: 5px 0; font-size: 14.5px; }
+
+  /* Print Envelope */
+  #envelopePrintArea { display: none; }
+  @media print {
+    body * { visibility: hidden; }
+    #envelopePrintArea, #envelopePrintArea * { visibility: visible; }
+    #envelopePrintArea {
+      display: block !important; position: absolute; left: 0; top: 0; width: 220mm; height: 110mm;
+      padding: 15mm; border: 1px solid #000; font-family: Arial, sans-serif;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Live Ticker -->
+  <div class="news-ticker">
+    <span class="ticker-title">🔥 இன்றைய அறிவிப்பு:</span>
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+      அரசு இ-சேவைகள், போட்டித் தேர்வுக்கான இலவச PDF பாடக் குறிப்புகள் (Study Materials) மற்றும் தினசரி வேலைவாய்ப்புச் செய்திகள் ஒரே தளத்தில்! ஆன்லைனில் விண்ணப்பிக்கும் சான்றிதழ்கள் வீட்டிற்கே இலவச தபாலில் அனுப்பி வைக்கப்படும்!
+    </marquee>
+  </div>
+
+  <!-- Special Offer Strip -->
+  <div class="offer-strip">
+    🎁 <strong>சிறப்புச் சலுகை:</strong> அனைத்து சான்றிதழ்களின் அசல் கலர் அச்சு நகல் உங்கள் வீட்டு முகவரிக்கே <strong>இலவச தபால் (Free Postal Delivery)</strong> மூலம் அனுப்பி வைக்கப்படும்!
+  </div>
+
+  <!-- Header -->
+  <div class="hero">
+    <h1>GANESH CSC & E-SEVAI CENTER</h1>
+    <h2>கணேஷ் இ-சேவை மையம் | கல்வி & வேலைவாய்ப்பு வழிகாட்டி</h2>
+    <p>📍 எண் 500, பஜார் வீதி, வடமாதிமங்கலம், போளூர் வட்டம், திருவண்ணாமலை மாவட்டம் - 606907</p>
+    <p style="font-size: 12.5px; color: #bbdefb;">(Authorized Common Service Center & Digital Facilitation Hub)</p>
+    <div class="cta-bar">
+      <a href="tel:7010565800" class="btn btn-call">📞 அழைக்க: 7010565800</a>
+      <button onclick="openApplyForm('பொது சேவை விண்ணப்பம்')" class="btn btn-apply-main">📝 Instant WhatsApp Apply</button>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdtMHVx8q0blbiDtTCYyWrnLNk56OAXYY0_KOLcl0xFt8fgyw/viewform" target="_blank" class="btn btn-gform">📋 Google Form Apply</a>
+      <a href="https://wa.me/917010565800" target="_blank" class="btn btn-wa">💬 WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('servicesTab', this)">🏛️ CSC & இ-சேவைகள்</button>
+    <button class="tab-btn" onclick="switchTab('studyTab', this)">📚 கல்வி & PDF குறிப்புகள்</button>
+    <button class="tab-btn" onclick="switchTab('newsTab', this)">📰 தினசரி செய்திகள் & Jobs</button>
+    <button class="tab-btn" onclick="switchTab('toolsTab', this)">🛠️ e-Sevai Photo/Doc Tool</button>
+  </div>
+
+  <!-- ================= TAB 1: CSC & E-SEVAI SERVICES ================= -->
+  <div id="servicesTab" class="tab-section active">
+    
+    <!-- Application Tracking -->
+    <div class="track-card">
+      <h3>🔍 உங்கள் விண்ணப்ப நிலையை அறிய (Check Application Status)</h3>
+      <p style="font-size: 13.5px; color: #555;">விண்ணப்ப எண் (எ.கா: APP001) அல்லது பதிவு செய்த WhatsApp மொபைல் எண்ணை உள்ளிடவும்:</p>
+      <div class="track-input-group">
+        <input type="text" id="trackQuery" class="track-input" placeholder="எ.கா: 7010565800 அல்லது APP001">
+        <button onclick="checkAppStatus()" class="btn-track-submit">சரிபார்க்கவும்</button>
+      </div>
+      <div id="trackResultBox" class="track-result"></div>
+    </div>
+
+    <h2 class="section-title">எங்கள் முக்கிய சேவைகள் (Our Services)</h2>
+    <p class="section-subtitle">👇 தேவையான ஆவணங்களைப் பார்க்க மற்றும் விண்ணப்பிக்க சேவையின் பெயரைத் தொடவும்</p>
+    
+    <div class="grid">
+      <!-- E-Sevai -->
+      <div class="card esevai">
+        <h3>🏛️ தமிழக அரசு இ-சேவைகள்</h3>
+        <ul>
+          <li onclick="showDocs('சாதிச் சான்றிதழ் (Community Certificate)', ['ஆதார் அட்டை (Aadhaar Card)', 'ஸ்மார்ட் ரேஷன் கார்டு (Smart Card)', 'பெற்றோர் அல்லது உடன்பிறந்தோர் சாதிச் சான்றிதழ்', 'பாஸ்போர்ட் அளவு புகைப்படம் (Photo)', 'பள்ளி மாற்றுச் சான்றிதழ் (TC)'])">சாதிச் சான்றிதழ் <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('வருமானச் சான்றிதழ் (Income Certificate)', ['ஆதார் அட்டை (Aadhaar)', 'ஸ்மார்ட் ரேஷன் கார்டு (Smart Card)', 'குடும்ப உறுப்பினர்கள் விவரம்', 'புகைப்படம் (Photo)', 'சம்பளச் சான்று / VAO சான்று'])">வருமானச் சான்றிதழ் <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('இருப்பிடச் சான்றிதழ் (Nativity Certificate)', ['ஆதார் அட்டை (Aadhaar Card)', 'ஸ்மார்ட் ரேஷன் கார்டு', 'வாக்காளர் அட்டை / EB பில்', 'புகைப்படம் (Photo)', 'பிறப்புச் சான்றிதழ் / TC'])">இருப்பிடச் சான்றிதழ் <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('வாரிசுச் சான்றிதழ் (Legal Heir Certificate)', ['இறப்புச் சான்றிதழ் (Death Certificate)', 'இறந்தவரின் ஆதார் அட்டை', 'வாரிசுதாரர்கள் அனைவரின் ஆதார் & புகைப்படம்', 'ஸ்மார்ட் ரேஷன் கார்டு'])">வாரிசுச் சான்றிதழ் <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('முதல் பட்டதாரி சான்றிதழ் (First Graduate)', ['விண்ணப்பதாரர் ஆதார் & புகைப்படம்', 'ஸ்மார்ட் ரேஷன் கார்டு', 'பெற்றோர் மற்றும் உடன்பிறந்தோர் TC / கல்விச் சான்று', 'விண்ணப்பதாரர் 10th, 12th, TC'])">முதல் பட்டதாரி சான்று <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('பட்டா மாறுதல் & EC (Patta Transfer)', ['பத்திர நகல் (Sale Deed / Settlement Deed)', 'பழைய பட்டா / சிட்டா', 'வில்லங்கச் சான்று (EC)', 'ஆதார் அட்டை & புகைப்படம்'])">பட்டா மாறுதல் & EC <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('புதிய ரேஷன் கார்டு (New Smart Card)', ['குடும்ப உறுப்பினர்கள் அனைவரின் ஆதார்', 'திருமணச் சான்றிதழ் / பெயர் நீக்கல் சான்று', 'மின் கட்டண ரசீது / வீட்டு வரி ரசீது', 'குடும்பத் தலைவர் புகைப்படம்'])">புதிய ரேஷன் கார்டு <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('முதியோர் ஓய்வூதியம் (OAP Pension)', ['ஆதார் அட்டை & வாக்காளர் அட்டை', 'ஸ்மார்ட் ரேஷன் கார்டு', 'வங்கி பாஸ்புக் நகல்', 'புகைப்படம் (Photo)'])">முதியோர் ஓய்வூதியம் <span class="info-icon">Apply / Docs</span></li>
+        </ul>
+      </div>
+
+      <!-- CSC Services -->
+      <div class="card csc">
+        <h3>🇮🇳 மத்திய அரசு & CSC சேவைகள்</h3>
+        <ul>
+          <li onclick="showDocs('பான் கார்டு (New PAN / Correction)', ['ஆதார் அட்டை', '2 பாஸ்போர்ட் சைஸ் புகைப்படம்', 'வெள்ளைத் தாளில் கையொப்பம்', 'மொபைல் எண்'])">பான் கார்டு (PAN Card) <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('பிரதம மந்திரி பயிர் காப்பீடு (PMFBY)', ['பட்டா மற்றும் சிட்டா நகல்', 'கிராம நிர்வாக அலுவலர் அடங்கல் (VAO Adangal)', 'வங்கி பாஸ்புக் முதல் பக்கம்', 'ஆதார் அட்டை & மொபைல் எண்'])">பயிர் காப்பீடு (PMFBY) <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('PM Kisan விவசாய நிதிப் பதிவு', ['ஆதார் அட்டை', 'கணினி சிட்டா / பட்டா', 'வங்கி பாஸ்புக் நகல்', 'ஆதாருடன் இணைந்த மொபைல் எண்'])">PM Kisan பதிவு <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('புதிய பாஸ்போர்ட் (Passport Application)', ['ஆதார் அட்டை', 'பான் கார்டு / வாக்காளர் அட்டை', '10th / 12th / Degree மார்க் ஷீட் அல்லது TC', 'வங்கி பாஸ்புக்'])">புதிய பாஸ்போர்ட் <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('வாக்காளர் அட்டை (Voter ID Services)', ['ஆதார் அட்டை', 'வயது சான்று (பிறப்புச் சான்று / Marksheet)', 'குடும்ப உறுப்பினர் வாக்காளர் அட்டை', 'பாஸ்போர்ட் அளவு புகைப்படம்'])">வாக்காளர் அட்டை <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('ஆயுஷ்மான் பாரத் & இ-ஷ்ரம் கார்டு', ['ஆதார் அட்டை', 'ஸ்மார்ட் ரேஷன் கார்டு', 'வங்கி பாஸ்புக் நகல்', 'ஆதார் மொபைல் எண் (OTP-க்கு)'])">ஆயுஷ்மான் / e-Shram <span class="info-icon">Apply / Docs</span></li>
+        </ul>
+      </div>
+
+      <!-- Mobile & Banking -->
+      <div class="card mobile">
+        <h3>📱 மொபைல் & வங்கிச் சேவைகள்</h3>
+        <ul>
+          <li onclick="showDocs('மின் கட்டணம் & பில் பேமெண்ட் (TNEB Bill)', ['மின் நுகர்வோர் எண் (EB Consumer Number)', 'மொபைல் எண்'])">மின் கட்டணம் (TNEB) <span class="info-icon">Pay Online</span></li>
+          <li onclick="showDocs('பணப் பரிமாற்றம் (Money Transfer)', ['வங்கி கணக்கு எண் (Account Number)', 'IFSC குறியீடு (IFSC Code)', 'பயனாளியின் பெயர் & மொபைல் எண்'])">உடனடிப் பணப் பரிமாற்றம் <span class="info-icon">Apply</span></li>
+          <li onclick="showDocs('மொபைல் சாப்ட்வேர் & அன்லாக் (Mobile Service)', ['மொபைல் மாடல் விவரம்', 'பில் / பாக்ஸ்', 'தொடர்பு எண்'])">மொபைல் சர்வீஸ் & அன்லாக் <span class="info-icon">Book Now</span></li>
+          <li onclick="showDocs('ஆதார் ஏடிஎம் (AEPS Cash Withdrawal)', ['ஆதார் எண்', 'வங்கி பெயர்', 'நேரில் வந்து கைரேகை வைக்க வேண்டும்'])">ஆதார் மினி ATM <span class="info-icon">Details</span></li>
+        </ul>
+      </div>
+
+      <!-- Education & Printing -->
+      <div class="card exam">
+        <h3>🎓 கல்வி, வேலைவாய்ப்பு & பிரிண்ட்</h3>
+        <ul>
+          <li onclick="showDocs('TNPSC / TET / TRB / SSC தேர்வு விண்ணப்பம்', ['ஆதார் அட்டை', '10th, 12th, Degree சான்றிதழ்கள்', 'சாதிச் சான்றிதழ்', 'புகைப்படம் மற்றும் கையொப்பம்', 'மின்னஞ்சல் & மொபைல் எண்'])">அரசுத் தேர்வு விண்ணப்பம் <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('வேலைவாய்ப்புப் பதிவு (Employment Renewal/New)', ['கல்விச் சான்றிதழ்கள்', 'சாதிச் சான்றிதழ்', 'ஆதார் அட்டை', 'பழைய வேலைவாய்ப்புப் பதிவு எண்'])">வேலைவாய்ப்புப் பதிவு <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('கல்லூரி ஆன்லைன் விண்ணப்பம் (College Admission)', ['10th, 11th, 12th மதிப்பெண் சான்றிதழ்', 'மாற்றுச் சான்றிதழ் (TC)', 'சாதி மற்றும் வருமானச் சான்றிதழ்', 'ஆதார், புகைப்படம், வங்கி பாஸ்புக்'])">கல்லூரி சேர்க்கை <span class="info-icon">Apply / Docs</span></li>
+          <li onclick="showDocs('ஆன்லைன் பிரிண்ட் & ID கார்டு ஆர்டர்', ['பிரிண்ட் எடுக்க வேண்டிய PDF / Photo கோப்புகள்', 'PVC ID கார்டு எனில் ஆதார் / பான் PDF'])">பிரிண்ட் & PVC கார்டு <span class="info-icon">Order Now</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TAB 2: STUDY MATERIALS & PDF DOWNLOADS ================= -->
+  <div id="studyTab" class="tab-section">
+    <h2 class="section-title">📚 போட்டித் தேர்வு பாடக் குறிப்புகள் & மாதிரிப் படிவங்கள்</h2>
+    <p class="section-subtitle">👇 நமது YouTube சேனலை Subscribe செய்து அனைத்து PDF கோப்புகளையும் இலவசமாகப் பதிவிறக்கவும்</p>
+
+    <div id="materialsGrid" class="grid">
+      <div class="hub-card">
+        <div>
+          <span class="badge">TNPSC Group 4 & VAO</span>
+          <h4>பொதுத்தமிழ் - இலக்கணக் குறிப்புகள் (முழுத் தொகுப்பு PDF)</h4>
+          <p>எதுகை, மோனை, இயைபு, யாப்பிலக்கணம் மற்றும் முக்கிய வினா-விடைகள் அடங்கிய கையேடு.</p>
+        </div>
+        <button class="btn-unlock-pdf" onclick="openSubUnlock('பொதுத்தமிழ் இலக்கணக் குறிப்புகள் PDF', 'https://drive.google.com')">🔒 Subscribe YouTube to Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TAB 3: DAILY NEWS & GOVT JOBS ================= -->
+  <div id="newsTab" class="tab-section">
+    <h2 class="section-title">📰 தினசரி அரசு அறிவிப்புகள் & வேலைவாய்ப்புச் செய்திகள்</h2>
+    <p class="section-subtitle">அருணைக் குரல் & கற்போம் பகிர்வோம் வழங்கும் உடனுக்குடனான தகவல்கள்</p>
+
+    <div id="newsGrid" class="grid">
+      <div class="hub-card news-item">
+        <div>
+          <span class="badge">21-11-2026 | அரசுத் திட்டம்</span>
+          <h4>தமிழக அரசின் புதிய நலத்திட்டங்கள் & விண்ணப்பிக்கும் முறை</h4>
+          <p>அண்ணன் சீர் திட்டம், கலைஞர் மகளிர் உரிமைத் தொகை மற்றும் பயிர் காப்பீடு விண்ணப்பங்களுக்கான முக்கிய வழிகாட்டுதல்கள்.</p>
+        </div>
+        <a href="https://www.youtube.com/@Arunaikural" target="_blank" class="btn-unlock-pdf" style="background:#0d47a1;">▶️ முழு வீடியோவை YouTube-ல் பார்க்க</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TAB 4: E-SEVAI AUTO PHOTO & DOC CONVERTER TOOL ================= -->
+  <div id="toolsTab" class="tab-section">
+    <h2 class="section-title">🛠️ e-Sevai Photo (120×150px) & Document (<190KB) Converter</h2>
+    <p class="section-subtitle">இ-சேவை போர்ட்டலுக்கு ஏற்ப போட்டோ அளவையும், ஆதார்/ரேஷன் கார்டு Front & Back ஒரே பக்கமாகவும் நொடியில் மாற்றலாம்</p>
+
+    <div class="tool-box">
+      <!-- 1. Photo 120x150px -->
+      <div class="file-box">
+        <label style="font-weight:bold; color:#0d47a1; display:block; margin-bottom:6px;">📸 1. விண்ணப்பதாரர் புகைப்படம் (Auto Resize to exact 120px × 150px)</label>
+        <input type="file" accept="image/*" onchange="processPhoto120x150(this, 'toolPhotoRes')">
+        <div id="toolPhotoRes" style="margin-top:8px;"></div>
+      </div>
+
+      <!-- 2. Aadhaar Front & Back Single Page <190KB -->
+      <div class="file-box">
+        <label style="font-weight:bold; color:#0d47a1; display:block; margin-bottom:6px;">🆔 2. ஆதார் அட்டை (Front & Back ➔ ஒரே பக்கமாக & < 190KB)</label>
+        <div class="two-col">
+          <div>
+            <small style="font-weight:bold;">முன்பக்கம் (Front):</small>
+            <input type="file" id="tAadhaarF" accept="image/*" onchange="mergeFrontBack('tAadhaarF', 'tAadhaarB', 'tAadhaarRes', 'Aadhaar_Merged')">
+          </div>
+          <div>
+            <small style="font-weight:bold;">பின்பக்கம் (Back):</small>
+            <input type="file" id="tAadhaarB" accept="image/*" onchange="mergeFrontBack('tAadhaarF', 'tAadhaarB', 'tAadhaarRes', 'Aadhaar_Merged')">
+          </div>
+        </div>
+        <div id="tAadhaarRes" style="margin-top:8px;"></div>
+      </div>
+
+      <!-- 3. Smart Card Front & Back Single Page <190KB -->
+      <div class="file-box">
+        <label style="font-weight:bold; color:#0d47a1; display:block; margin-bottom:6px;">💳 3. ஸ்மார்ட் ரேஷன் கார்டு (Front & Back ➔ ஒரே பக்கமாக & < 190KB)</label>
+        <div class="two-col">
+          <div>
+            <small style="font-weight:bold;">முன்பக்கம் (Front):</small>
+            <input type="file" id="tRationF" accept="image/*" onchange="mergeFrontBack('tRationF', 'tRationB', 'tRationRes', 'SmartCard_Merged')">
+          </div>
+          <div>
+            <small style="font-weight:bold;">பின்பக்கம் (Back):</small>
+            <input type="file" id="tRationB" accept="image/*" onchange="mergeFrontBack('tRationF', 'tRationB', 'tRationRes', 'SmartCard_Merged')">
+          </div>
+        </div>
+        <div id="tRationRes" style="margin-top:8px;"></div>
+      </div>
+
+      <!-- 4. Other Documents <190KB -->
+      <div class="file-box">
+        <label style="font-weight:bold; color:#0d47a1; display:block; margin-bottom:6px;">📄 4. இதர ஆவணங்கள் (TC, Marksheet, VAO Cert - Auto < 190KB)</label>
+        <input type="file" accept="image/*" multiple onchange="processDocsUnder190KB(this, 'tOtherDocsRes')">
+        <div id="tOtherDocsRes" style="margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <h3>GANESH CSC & E-SEVAI CENTER</h3>
+    <p>உரிமையாளர்: <strong>R. கணேஷ்</strong> | அருணைக் குரல் & கற்போம் பகிர்வோம்</p>
+    <p>📍 எண் 500 பஜார் வீதி வடமாதிமங்கலம் போளூர் வட்டம் திருவண்ணாமலை மாவட்டம் 606907</p>
+    <p>📞 தொடர்புக்கு: <strong>+91 70105 65800</strong></p>
+  </div>
+
+  <!-- Sub4Unlock Modal -->
+  <div id="subModal" class="modal">
+    <div class="modal-content" style="max-width: 480px; text-align: center;">
+      <span class="close-btn" onclick="closeSubModal()">&times;</span>
+      <h4 id="pdfModalTitle">🔒 PDF கோப்பைப் பதிவிறக்கம் செய்ய</h4>
+      <p style="font-size: 14px; color: #555; margin-bottom: 18px;">
+        கீழே உள்ள பட்டனை அழுத்தி நமது <strong>YouTube சேனலை Subscribe</strong> செய்தவுடன் Download பட்டன் தானாக திறக்கப்படும்!
+      </p>
+      <div style="margin-bottom: 15px;">
+        <a href="https://www.youtube.com/@Arunaikural?sub_confirmation=1" target="_blank" onclick="triggerUnlockTimer()" style="display: inline-block; padding: 12px 24px; background: #d32f2f; color: #fff; text-decoration: none; font-weight: bold; border-radius: 50px; box-shadow: 0 4px 8px rgba(211,47,47,0.3);">
+          ▶️ 1. Subscribe on YouTube to Unlock
+        </a>
+      </div>
+      <div>
+        <a id="finalPdfBtn" href="#" style="display: inline-block; padding: 12px 24px; background: #9e9e9e; color: #fff; text-decoration: none; font-weight: bold; border-radius: 50px; cursor: not-allowed; pointer-events: none;">
+          🔒 2. Download PDF (Locked)
+        </a>
+      </div>
+      <p id="subStatusMsg" style="font-size: 12.5px; color: #777; margin-top: 14px;">(சேனலை சப்ஸ்கிரைப் செய்துவிட்டு இந்தப் பக்கத்திற்குத் திரும்பவும்)</p>
+    </div>
+  </div>
+
+  <!-- Document Checklist Modal -->
+  <div id="docModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeDocModal()">&times;</span>
+      <h4 id="serviceTitle">சேவை ஆவணங்கள்</h4>
+      <p style="font-size: 14px; color: #d32f2f; font-weight: bold;">தேவையான அசல் ஆவணங்கள் (Required Documents):</p>
+      <ul id="docList" class="doc-ul"></ul>
+      <div style="display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+        <button id="applyFromDocBtn" style="flex: 1; min-width:140px; padding: 11px; background-color: #25d366; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer;">💬 WhatsApp Apply</button>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdtMHVx8q0blbiDtTCYyWrnLNk56OAXYY0_KOLcl0xFt8fgyw/viewform" target="_blank" style="flex: 1; min-width:140px; padding: 11px; background-color: #0d47a1; color: white; border-radius: 8px; font-weight: bold; font-size: 14px; text-align:center; text-decoration:none;">📋 Google Form Apply</a>
+        <button onclick="closeDocModal()" style="padding: 11px 16px; background-color: #757575; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">மூடு</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Online Application Form Modal (With Auto Photo 120x150 & Front/Back Merger) -->
+  <div id="applyModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeApplyModal()">&times;</span>
+      <h4>📝 ஆன்லைன் சேவை விண்ணப்பப் படிவம்</h4>
+      
+      <form id="cscAppForm" onsubmit="submitApplication(event)">
+        <div class="form-group">
+          <label>தேர்ந்தெடுத்த சேவை (Selected Service) *</label>
+          <input type="text" id="appService" required readonly style="background:#eef4ff; font-weight:bold; color:#0d47a1;">
+        </div>
+
+        <div class="two-col">
+          <div class="form-group">
+            <label>Applicant Name (in English) *</label>
+            <input type="text" id="appNameEn" placeholder="Eg: Kumar" required>
+          </div>
+          <div class="form-group">
+            <label>விண்ணப்பதாரர் பெயர் (தமிழில்) *</label>
+            <input type="text" id="appNameTa" placeholder="எ.கா: குமார்" required>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="form-group">
+            <label>Father's / Husband's Name (English) *</label>
+            <input type="text" id="appFatherEn" placeholder="Father Name" required>
+          </div>
+          <div class="form-group">
+            <label>தந்தை / கணவர் பெயர் (தமிழில்) *</label>
+            <input type="text" id="appFatherTa" placeholder="தந்தை பெயர்" required>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="form-group">
+            <label>Mother's Name (English) *</label>
+            <input type="text" id="appMotherEn" placeholder="Mother Name" required>
+          </div>
+          <div class="form-group">
+            <label>தாய் பெயர் (தமிழில்) *</label>
+            <input type="text" id="appMotherTa" placeholder="தாய் பெயர்" required>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="form-group">
+            <label>மொபைல் எண் (WhatsApp எண்) *</label>
+            <input type="tel" id="appPhone" pattern="[0-9]{10}" placeholder="10 இலக்க எண்" required>
+          </div>
+          <div class="form-group">
+            <label>ஆதார் எண் (Aadhaar No) *</label>
+            <input type="text" id="appAadhaar" placeholder="XXXX XXXX XXXX" required>
+          </div>
+        </div>
+
+        <!-- Family Details for Income Certificate -->
+        <div id="incomeFamilySection" class="family-section">
+          <h5 style="color:#0d47a1; margin-bottom:8px;">👨‍👩‍👧‍👦 குடும்ப உறுப்பினர்கள் விவரம் (Family Members):</h5>
+          <div id="familyRowsContainer">
+            <div class="fam-row">
+              <input type="text" placeholder="உறுப்பினர் பெயர்" class="fam-name" required>
+              <input type="number" placeholder="வயது" class="fam-age" required>
+              <input type="text" placeholder="உறவுமுறை" class="fam-rel" required>
+              <input type="text" placeholder="தொழில் & வருமானம்" class="fam-job" required>
+              <span></span>
+            </div>
+          </div>
+          <button type="button" class="btn-add-row" onclick="addFamilyRow()">+ உறுப்பினர் சேர்க்க</button>
+        </div>
+
+        <!-- Postal Delivery Box -->
+        <div class="postal-box">
+          <h5>📦 தபால் மூலம் சான்றிதழ் பெற முழு முகவரி (Postal Delivery Address):</h5>
+          <div class="form-group" style="margin-bottom: 8px;">
+            <input type="text" id="postDoor" placeholder="கதவு எண் & தெருப் பெயர் (Door No & Street)" required>
+          </div>
+          <div class="two-col" style="margin-bottom: 8px;">
+            <input type="text" id="postVillage" placeholder="கிராமம் / ஊர் (Village / Town)" required>
+            <input type="text" id="postTaluk" placeholder="வட்டம் / தாலுகா (Taluk)" required>
+          </div>
+          <div class="two-col">
+            <input type="text" id="postDistrict" placeholder="மாவட்டம் (District)" value="திருவண்ணாமலை" required>
+            <input type="text" id="postPincode" pattern="[0-9]{6}" placeholder="அஞ்சல் குறியீடு (Pincode)" required>
+          </div>
+        </div>
+
+        <!-- UPI Payment -->
+        <div class="payment-card">
+          <h5 style="color:#f57f17; margin-bottom:6px;">💳 சேவைக்கான கட்டணம் (Online UPI Payment)</h5>
+          <p style="font-size: 13.5px;">கட்டணம்: <strong style="color:#d32f2f; font-size:16px;">₹60</strong> (அரசு கட்டணம் + ஆன்லைன் சேவை + இலவச தபால்)</p>
+          <div class="qr-box">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7010565800@upi&pn=GANESH_CSC&am=60&cu=INR" alt="UPI QR">
+          </div>
+          <p style="font-size: 12px; color: #333;">PhonePe / GPay / Paytm மூலம் ஸ்கேன் செய்து செலுத்தவும்</p>
+          <div class="form-group" style="margin-top: 8px; max-width: 300px; margin-left: auto; margin-right: auto;">
+            <label style="font-size: 13px;">பணம் செலுத்திய UTR / Ref No (12 Digits) *</label>
+            <input type="text" id="payUtr" placeholder="எ.கா: 4123XXXXXXXX" required>
+          </div>
+        </div>
+
+        <!-- Auto 120x150 Photo -->
+        <div class="form-group file-box">
+          <label>📸 1. விண்ணப்பதாரர் புகைப்படம் (Auto 120×150px) *</label>
+          <input type="file" id="appPhoto" accept="image/*" onchange="processPhoto120x150(this, 'formPhotoRes')" required>
+          <div id="formPhotoRes" style="margin-top:6px;"></div>
+        </div>
+
+        <!-- Auto Front+Back Aadhaar Merger -->
+        <div class="form-group file-box">
+          <label>🆔 2. ஆதார் அட்டை (Front & Back ➔ ஒரே பக்கமாக & < 190KB) *</label>
+          <div class="two-col">
+            <div><small>முன்பக்கம் (Front):</small><input type="file" id="fAadhaarF" accept="image/*" onchange="mergeFrontBack('fAadhaarF', 'fAadhaarB', 'fAadhaarRes', 'Aadhaar_Merged')" required></div>
+            <div><small>பின்பக்கம் (Back):</small><input type="file" id="fAadhaarB" accept="image/*" onchange="mergeFrontBack('fAadhaarF', 'fAadhaarB', 'fAadhaarRes', 'Aadhaar_Merged')" required></div>
+          </div>
+          <div id="fAadhaarRes" style="margin-top:6px;"></div>
+        </div>
+
+        <!-- Auto Front+Back Ration Card Merger -->
+        <div class="form-group file-box">
+          <label>💳 3. ஸ்மார்ட் ரேஷன் கார்டு (Front & Back ➔ ஒரே பக்கமாக & < 190KB) *</label>
+          <div class="two-col">
+            <div><small>முன்பக்கம் (Front):</small><input type="file" id="fRationF" accept="image/*" onchange="mergeFrontBack('fRationF', 'fRationB', 'fRationRes', 'SmartCard_Merged')" required></div>
+            <div><small>பின்பக்கம் (Back):</small><input type="file" id="fRationB" accept="image/*" onchange="mergeFrontBack('fRationF', 'fRationB', 'fRationRes', 'SmartCard_Merged')" required></div>
+          </div>
+          <div id="fRationRes" style="margin-top:6px;"></div>
+        </div>
+
+        <!-- Other Docs <190KB -->
+        <div class="form-group file-box">
+          <label>📄 4. இதர ஆவணங்கள் (TC, Marksheet - Auto < 190KB)</label>
+          <input type="file" id="appDocs" accept="image/*" multiple onchange="processDocsUnder190KB(this, 'formDocsRes')">
+          <div id="formDocsRes" style="margin-top:6px;"></div>
+        </div>
+
+        <!-- Signature -->
+        <div class="form-group">
+          <label>✍️ 5. விண்ணப்பதாரர் கையொப்பம் (Touch & Sign Below) *</label>
+          <div class="sig-container">
+            <canvas id="sigCanvas" width="450" height="125"></canvas>
+            <div class="sig-actions">
+              <button type="button" class="btn-small" style="background:#f44336; color:#fff;" onclick="clearSignature()">🔄 அழி (Clear)</button>
+              <button type="button" class="btn-small" style="background:#1976d2; color:#fff;" onclick="downloadSignature()">⬇️ சேமி (Save Sign)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="declaration-box">
+          <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer; font-weight:normal;">
+            <input type="checkbox" id="appDecl" required style="margin-top:4px; transform:scale(1.2);">
+            <span><strong>சுய உறுதிமொழி:</strong> மேலே அளித்துள்ள விவரங்கள் அனைத்தும் உண்மையானவை. சான்றிதழ் தயாரானதும் மேற்கண்ட முகவரிக்கு இலவச தபாலில் அனுப்பி வைக்க சம்மதிக்கிறேன்.</span>
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button type="button" onclick="previewEnvelopeFromForm()" style="flex: 1; padding:12px; background:#0288d1; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">✉️ கவர் பிரிண்ட்</button>
+          <button type="submit" style="flex: 2; padding:14px; background:#25d366; color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:bold; cursor:pointer;">✅ விண்ணப்பிக்க & வாட்ஸ்அப் அனுப்புக</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Printable Envelope Area -->
+  <div id="envelopePrintArea">
+    <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 20px;">
+      <div><h3 style="margin: 0; font-size: 16px;">BOOK-POST / SPEED POST</h3><p style="margin: 0; font-size: 12px;">CERTIFICATE DELIVERY</p></div>
+      <div style="border: 2px solid #000; padding: 4px 12px; font-weight: bold; font-size: 12px;">FREE POSTAL SERVICE</div>
+    </div>
+    <div style="font-size: 13px; line-height: 1.4; margin-bottom: 30px;">
+      <strong>FROM (அனுப்புநர்):</strong><br><strong>GANESH CSC & E-SEVAI CENTER</strong><br>
+      எண் 500, பஜார் வீதி, வடமாதிமங்கலம் கிராமம்,<br>போளூர் வட்டம், திருவண்ணாமலை மாவட்டம் - 606907.<br>செல்: +91 70105 65800
+    </div>
+    <div style="margin-left: 45%; font-size: 15px; line-height: 1.5; border-left: 2px solid #333; padding-left: 15px;">
+      <strong style="font-size: 16px;">TO (பெறுநர்):</strong><br>
+      <span id="envName" style="font-weight: bold; font-size: 17px;"></span><br>
+      <span id="envFather"></span><br><span id="envMother"></span><br>
+      <span id="envDoorStreet"></span><br><span id="envVillageTaluk"></span><br>
+      <span id="envDistPin" style="font-weight: bold;"></span><br>செல்: <span id="envPhone" style="font-weight: bold;"></span>
+    </div>
+  </div>
+
+  <script>
+    // Your Active Google Apps Script Web App URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzF3XRF2xsIfcABwqvHbSGZ9CFJFR-uisjCOCIVK0FWC3zVn7zxVlXB10hjPQUeD729Sg/exec";
+    let lastFetchedCustomer = null;
+    let targetPdfLink = "";
+
+    // Tab Switcher
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Load Dynamic News & Study Materials from Google Sheet
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch(SCRIPT_URL + "?type=hub")
+        .then(res => res.json())
+        .then(data => {
+          if (data.materials && data.materials.length > 0) {
+            const matGrid = document.getElementById('materialsGrid');
+            matGrid.innerHTML = "";
+            data.materials.forEach(item => {
+              matGrid.innerHTML += `
+                <div class="hub-card">
+                  <div>
+                    <span class="badge">${item.category || 'Study Material'}</span>
+                    <h4>${item.title}</h4>
+                  </div>
+                  <button class="btn-unlock-pdf" onclick="openSubUnlock('${item.title.replace(/'/g, "\\'")}', '${item.link}')">🔒 Subscribe YouTube to Download PDF</button>
+                </div>`;
+            });
+          }
+          if (data.news && data.news.length > 0) {
+            const newsGrid = document.getElementById('newsGrid');
+            newsGrid.innerHTML = "";
+            data.news.forEach(item => {
+              newsGrid.innerHTML += `
+                <div class="hub-card news-item">
+                  <div>
+                    <span class="badge">${item.date || 'Today'}</span>
+                    <h4>${item.title}</h4>
+                    <p>${item.details || ''}</p>
+                  </div>
+                  ${item.link ? `<a href="${item.link}" target="_blank" class="btn-unlock-pdf" style="background:#0d47a1;">▶️ முழு விவரம் அறிய</a>` : ''}
+                </div>`;
+            });
+          }
+        })
+        .catch(() => console.log("Loaded default hub items"));
+    });
+
+    // Sub4Unlock Modal Functions
+    function openSubUnlock(title, pdfUrl) {
+      document.getElementById('pdfModalTitle').innerText = title;
+      targetPdfLink = pdfUrl;
+      const dlBtn = document.getElementById('finalPdfBtn');
+      dlBtn.href = "#";
+      dlBtn.style.background = "#9e9e9e";
+      dlBtn.style.cursor = "not-allowed";
+      dlBtn.style.pointerEvents = "none";
+      dlBtn.innerText = "🔒 2. Download PDF (Locked)";
+      document.getElementById('subStatusMsg').innerText = "(சேனலை சப்ஸ்கிரைப் செய்துவிட்டு இந்தப் பக்கத்திற்குத் திரும்பவும்)";
+      document.getElementById('subModal').classList.add('show');
+    }
+
+    function triggerUnlockTimer() {
+      document.getElementById('subStatusMsg').innerText = "சரிபார்க்கப்படுகிறது... தயவுசெய்து 5 வினாடிகள் காத்திருக்கவும் ⏳";
+      setTimeout(() => {
+        const dlBtn = document.getElementById('finalPdfBtn');
+        dlBtn.href = targetPdfLink;
+        dlBtn.target = "_blank";
+        dlBtn.style.background = "#2e7d32";
+        dlBtn.style.cursor = "pointer";
+        dlBtn.style.pointerEvents = "auto";
+        dlBtn.innerText = "✅ 2. Download PDF Now";
+        document.getElementById('subStatusMsg').innerHTML = "<span style='color:#2e7d32; font-weight:bold;'>அன்லாக் செய்யப்பட்டது! இப்போது PDF-ஐப் பதிவிறக்கலாம்.</span>";
+      }, 5000);
+    }
+
+    function closeSubModal() { document.getElementById('subModal').classList.remove('show'); }
+
+    // ================= IMAGE RESIZER & MERGER FUNCTIONS =================
+    function loadImageFromFile(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // 1. Photo 120px x 150px
+    async function processPhoto120x150(input, resDivId) {
+      const resDiv = document.getElementById(resDivId);
+      if (!input.files || !input.files[0]) return;
+      const img = await loadImageFromFile(input.files[0]);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 120;
+      canvas.height = 150;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, 120, 150);
+      ctx.drawImage(img, 0, 0, 120, 150);
+
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      const sizeKB = Math.round((dataUrl.length * 3 / 4) / 1024);
+
+      resDiv.innerHTML = `
+        <div style="padding:8px; background:#e8f5e9; border:1px solid #4caf50; border-radius:6px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <img src="${dataUrl}" style="width:48px; height:60px; border:1px solid #999; border-radius:3px;">
+            <span style="font-size:13px;">✅ Photo Ready: <strong>120×150px (${sizeKB} KB)</strong></span>
+          </div>
+          <a href="${dataUrl}" download="eSevai_Photo_120x150.jpg" style="background:#0d47a1; color:#fff; padding:6px 12px; border-radius:5px; text-decoration:none; font-size:12.5px; font-weight:bold;">⬇️ Save Photo</a>
+        </div>
+      `;
+    }
+
+    // 2. Front & Back Single Page Merger (< 190KB)
+    async function mergeFrontBack(frontInputId, backInputId, resultDivId, baseFileName) {
+      const fInput = document.getElementById(frontInputId);
+      const bInput = document.getElementById(backInputId);
+      const resDiv = document.getElementById(resultDivId);
+
+      if (!fInput.files[0] || !bInput.files[0]) {
+        resDiv.innerHTML = `<span style="font-size:12px; color:#d32f2f;">⚠️ முன்பக்கம் மற்றும் பின்பக்கம் இரண்டையும் தேர்வு செய்யவும்...</span>`;
+        return;
+      }
+
+      resDiv.innerHTML = `<span style="font-size:12px; color:#0d47a1;">⏳ Front & Back இணைக்கப்பட்டு 190KB-க்குள் மாற்றப்படுகிறது...</span>`;
+
+      const img1 = await loadImageFromFile(fInput.files[0]);
+      const img2 = await loadImageFromFile(bInput.files[0]);
+
+      const targetWidth = 800;
+      const h1 = Math.round((img1.height * targetWidth) / img1.width);
+      const h2 = Math.round((img2.height * targetWidth) / img2.width);
+      const gap = 25;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = targetWidth;
+      canvas.height = h1 + h2 + gap;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img1, 0, 0, targetWidth, h1);
+      ctx.drawImage(img2, 0, h1 + gap, targetWidth, h2);
+
+      let quality = 0.88;
+      let dataUrl = canvas.toDataURL('image/jpeg', quality);
+      let sizeKB = Math.round((dataUrl.length * 3 / 4) / 1024);
+
+      while (sizeKB > 185 && quality > 0.15) {
+        quality -= 0.07;
+        dataUrl = canvas.toDataURL('image/jpeg', quality);
+        sizeKB = Math.round((dataUrl.length * 3 / 4) / 1024);
+      }
+
+      const finalName = `${baseFileName}_${sizeKB}KB.jpg`;
+      resDiv.innerHTML = `
+        <div style="padding:8px; background:#e8f5e9; border:1px solid #4caf50; border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:13px;">
+          <span>✅ ஒரே பக்கமாக இணைக்கப்பட்டது (<strong>${sizeKB} KB</strong>)</span>
+          <a href="${dataUrl}" download="${finalName}" style="background:#2e7d32; color:#fff; padding:6px 12px; border-radius:5px; text-decoration:none; font-weight:bold;">⬇️ Save Single Page</a>
+        </div>
+      `;
+    }
+
+    // 3. Other Docs Under 190KB
+    async function processDocsUnder190KB(input, resDivId) {
+      const listDiv = document.getElementById(resDivId);
+      if (!input.files || input.files.length === 0) return;
+      listDiv.innerHTML = "";
+
+      Array.from(input.files).forEach(async (file, index) => {
+        const img = await loadImageFromFile(file);
+        const canvas = document.createElement('canvas');
+        let width = img.width, height = img.height;
+        const maxDim = 1000;
+
+        if (width > maxDim || height > maxDim) {
+          if (width > height) { height = Math.round((height * maxDim) / width); width = maxDim; }
+          else { width = Math.round((width * maxDim) / height); height = maxDim; }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let quality = 0.85;
+        let dataUrl = canvas.toDataURL('image/jpeg', quality);
+        let sizeKB = Math.round((dataUrl.length * 3 / 4) / 1024);
+
+        while (sizeKB > 185 && quality > 0.15) {
+          quality -= 0.08;
+          dataUrl = canvas.toDataURL('image/jpeg', quality);
+          sizeKB = Math.round((dataUrl.length * 3 / 4) / 1024);
+        }
+
+        const fileName = `eSevai_Doc_${index + 1}_${sizeKB}KB.jpg`;
+        listDiv.innerHTML += `
+          <div style="margin-bottom:6px; padding:7px; background:#e8f5e9; border:1px solid #4caf50; border-radius:5px; display:flex; justify-content:space-between; align-items:center; font-size:13px;">
+            <span>✅ ${file.name} ➔ <strong>${sizeKB} KB</strong></span>
+            <a href="${dataUrl}" download="${fileName}" style="background:#2e7d32; color:#fff; padding:5px 10px; border-radius:4px; text-decoration:none; font-weight:bold;">⬇️ Save</a>
+          </div>`;
+      });
+    }
+
+    // ================= APPLICATION TRACKING =================
+    function checkAppStatus() {
+      const q = document.getElementById('trackQuery').value.trim();
+      const resBox = document.getElementById('trackResultBox');
+      if (!q) { alert("தயவுசெய்து மொபைல் எண் அல்லது விண்ணப்ப எண்ணை உள்ளிடவும்."); return; }
+
+      resBox.style.display = "block";
+      resBox.innerHTML = "<p style='color:#0d47a1; font-weight:bold;'>விவரங்கள் தேடப்படுகின்றன... ⏳</p>";
+
+      fetch(SCRIPT_URL + "?type=track&q=" + encodeURIComponent(q))
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.found) {
+            lastFetchedCustomer = data;
+            resBox.innerHTML = `
+              <p><strong>விண்ணப்ப எண்:</strong> ${data.appNo || q}</p>
+              <p><strong>பெயர்:</strong> ${data.name || '-'}</p>
+              <p><strong>சேவை:</strong> ${data.service || '-'}</p>
+              <p><strong>நிலை (Status):</strong> <span style="font-weight:bold; color:#0d47a1;">${data.status || 'புதிய விண்ணப்பம்'}</span></p>
+              <p><strong>குறிப்பு:</strong> ${data.remarks || '-'}</p>
+              <p><strong>தபால் முகவரி:</strong> ${data.postalAddress || '-'}</p>
+              <button onclick="triggerEnvelopePrint()" style="margin-top:10px; padding:7px 14px; background:#2e7d32; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">✉️ தபால் கவர் பிரிண்ட் செய்</button>
+            `;
+          } else {
+            resBox.innerHTML = "<p style='color:#d32f2f; font-weight:bold;'>விவரங்கள் கிடைக்கவில்லை! 7010565800 எண்ணைத் தொடர்பு கொள்ளவும்.</p>";
+          }
+        })
+        .catch(() => { resBox.innerHTML = "<p style='color:#d32f2f;'>தகவல்களைப் பெறுவதில் பிழை.</p>"; });
+    }
+
+    function triggerEnvelopePrint() {
+      if (!lastFetchedCustomer) return;
+      document.getElementById('envName').innerText = "திரு/திருமதி: " + (lastFetchedCustomer.name || "");
+      document.getElementById('envDoorStreet').innerText = lastFetchedCustomer.postalAddress || "";
+      document.getElementById('envPhone').innerText = lastFetchedCustomer.phone || "";
+      window.print();
+    }
+
+    function previewEnvelopeFromForm() {
+      const name = document.getElementById('appNameTa').value + " (" + document.getElementById('appNameEn').value + ")";
+      const door = document.getElementById('postDoor').value;
+      const village = document.getElementById('postVillage').value;
+      const pin = document.getElementById('postPincode').value;
+      if (!document.getElementById('appNameTa').value || !door || !pin) { alert("பெயர் மற்றும் தபால் முகவரியை உள்ளிடவும்."); return; }
+
+      document.getElementById('envName').innerText = "திரு/திருமதி: " + name;
+      document.getElementById('envFather').innerText = "தந்தை: " + document.getElementById('appFatherTa').value;
+      document.getElementById('envMother').innerText = "தாய்: " + document.getElementById('appMotherTa').value;
+      document.getElementById('envDoorStreet').innerText = door;
+      document.getElementById('envVillageTaluk').innerText = village + ", " + document.getElementById('postTaluk').value;
+      document.getElementById('envDistPin').innerText = document.getElementById('postDistrict').value + " - " + pin;
+      document.getElementById('envPhone').innerText = document.getElementById('appPhone').value;
+      window.print();
+    }
+
+    function addFamilyRow() {
+      const div = document.createElement('div');
+      div.className = 'fam-row';
+      div.innerHTML = `<input type="text" placeholder="பெயர்" class="fam-name" required><input type="number" placeholder="வயது" class="fam-age" required><input type="text" placeholder="உறவுமுறை" class="fam-rel" required><input type="text" placeholder="தொழில் & வருமானம்" class="fam-job" required><button type="button" class="btn-del-row" onclick="this.parentElement.remove()">✕</button>`;
+      document.getElementById('familyRowsContainer').appendChild(div);
+    }
+
+    function showDocs(serviceName, docArray) {
+      document.getElementById('serviceTitle').innerText = serviceName;
+      const ul = document.getElementById('docList');
+      ul.innerHTML = '';
+      docArray.forEach(d => { const li = document.createElement('li'); li.innerText = d; ul.appendChild(li); });
+      document.getElementById('applyFromDocBtn').onclick = () => { closeDocModal(); openApplyForm(serviceName); };
+      document.getElementById('docModal').classList.add('show');
+    }
+
+    function closeDocModal() { document.getElementById('docModal').classList.remove('show'); }
+
+    function openApplyForm(serviceName) {
+      document.getElementById('appService').value = serviceName;
+      document.getElementById('incomeFamilySection').style.display = (serviceName.includes("வருமான") || serviceName.includes("Income")) ? "block" : "none";
+      document.getElementById('applyModal').classList.add('show');
+      initSignaturePad();
+    }
+
+    function closeApplyModal() { document.getElementById('applyModal').classList.remove('show'); }
+
+    const canvas = document.getElementById('sigCanvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false, hasSigned = false;
+    function initSignaturePad() { ctx.strokeStyle = "#000080"; ctx.lineWidth = 2.5; ctx.lineCap = "round"; }
+    function getPos(e) {
+      const r = canvas.getBoundingClientRect();
+      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const cy = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: (cx - r.left) * (canvas.width / r.width), y: (cy - r.top) * (canvas.height / r.height) };
+    }
+    canvas.addEventListener('mousedown', e => { drawing = true; hasSigned = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('mousemove', e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; hasSigned = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+    canvas.addEventListener('touchend', () => drawing = false);
+    function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); hasSigned = false; }
+    function downloadSignature() { const l = document.createElement('a'); l.download = 'Signature.png'; l.href = canvas.toDataURL('image/png'); l.click(); }
+
+    function submitApplication(e) {
+      e.preventDefault();
+      const service = document.getElementById('appService').value;
+      const nameTa = document.getElementById('appNameTa').value, nameEn = document.getElementById('appNameEn').value;
+      const fatherTa = document.getElementById('appFatherTa').value, fatherEn = document.getElementById('appFatherEn').value;
+      const motherTa = document.getElementById('appMotherTa').value, motherEn = document.getElementById('appMotherEn').value;
+      const phone = document.getElementById('appPhone').value, aadhaar = document.getElementById('appAadhaar').value;
+      const utr = document.getElementById('payUtr').value;
+      const fullPostal = `${document.getElementById('postDoor').value}, ${document.getElementById('postVillage').value}, ${document.getElementById('postTaluk').value}, ${document.getElementById('postDistrict').value} - ${document.getElementById('postPincode').value}`;
+      
+      let famDetails = "";
+      if (service.includes("வருமான") || service.includes("Income")) {
+        const rows = document.querySelectorAll('#familyRowsContainer .fam-row');
+        famDetails = "%0A👨‍👩‍👧 *குடும்ப உறுப்பினர்கள் விவரம்:*%0A";
+        rows.forEach((r, idx) => {
+          famDetails += `${idx+1}. ${r.querySelector('.fam-name').value} (${r.querySelector('.fam-age').value} வயது, ${r.querySelector('.fam-rel').value}) - ${r.querySelector('.fam-job').value}%0A`;
+        });
+      }
+
+      if (hasSigned) downloadSignature();
+
+      const msg = `*GANESH CSC & E-SEVAI - புதிய விண்ணப்பம்*%0A----------------------------------------%0A` +
+                  `📌 *சேவை:* ${service}%0A👤 *பெயர்:* ${nameEn} / ${nameTa}%0A` +
+                  `👨‍👦 *தந்தை:* ${fatherEn} / ${fatherTa}%0A👩‍👦 *தாய்:* ${motherEn} / ${motherTa}%0A` +
+                  `📞 *மொபைல்:* ${phone}%0A🆔 *ஆதார்:* ${aadhaar}%0A📬 *தபால் முகவரி:* ${fullPostal}%0A` +
+                  `💳 *கட்டணம் (₹60) UTR:* ${utr}%0A${famDetails}----------------------------------------%0A` +
+                  `*(சான்றிதழ் தயாரானதும் இலவச தபாலில் அனுப்பி வைக்கவும்)*`;
+
+      alert("விவரங்கள் தயாராகிவிட்டன! WhatsApp பக்கத்தில் சேமித்த Photo (120x150), Aadhaar, Ration Card & Signature கோப்புகளை Attach செய்து அனுப்பவும்.");
+      window.open(`https://wa.me/917010565800?text=${msg}`, '_blank');
+      closeApplyModal();
+    }
+  </script>
+</body>
+</html>
